@@ -14,18 +14,18 @@ const Shop = () => {
   // products to be rendered on the UI
   const [displayProducts, setDisplayProducts] = useState([]);
   console.log(products);
-
+  const size = 10;
   useEffect(() => {
-    fetch('http://localhost:5000/products')
+    fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.products);
         setDisplayProducts(data.products);
         const count = data.count;
-        const pageCount = Math.ceil(count / 10);
+        const pageCount = Math.ceil(count / size);
         setPageCount(pageCount);
       });
-  }, []);
+  }, [page]);
   const handleDelete = (id) => {
     // console.log(typeof id);
     fetch(`http://localhost:5000/products/${id}`, {
